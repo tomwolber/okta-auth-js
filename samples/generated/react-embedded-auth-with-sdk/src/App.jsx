@@ -53,8 +53,11 @@ const restoreOriginalUri = () => {};
 function App() {
   const history = useHistory();
   const [transaction, setTransaction] = useState(null);
-  // track myaccount challenge transaction
+  
+  // track myaccount transactions
+  const [profile, setProfile] = useState(null);
   const [challenge, setChallenge] = useState(null); 
+
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -103,6 +106,8 @@ function App() {
       <Transaction.Provider value={{
         transaction,
         setTransaction,
+        profile,
+        setProfile,
         challenge,
         setChallenge
       }}>

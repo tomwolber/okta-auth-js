@@ -12,7 +12,7 @@ import { useTransaction } from '../../TransactionContext';
 
 const PhoneSection = () => {
   const { oktaAuth } = useOktaAuth();
-  const { setTransaction } = useTransaction();
+  const { setTransaction, setProfile } = useTransaction();
   const [phones, setPhones] = useState();
 
   useEffect(() => {
@@ -26,8 +26,9 @@ const PhoneSection = () => {
   }, [oktaAuth, phones]);
 
   const finishTransaction = () => {
-    // re-fetch phones list
+    // re-fetch phones and profile
     setPhones(null);
+    setProfile(null);
   };
 
   const handleAddPhone = async phoneNumber => {

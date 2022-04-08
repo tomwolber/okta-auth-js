@@ -13,7 +13,7 @@ import { capitalizeFirstLetter } from '../../util';
 
 const EmailSection = () => {
   const { oktaAuth } = useOktaAuth();
-  const { setTransaction, setChallenge } = useTransaction();
+  const { setTransaction, setChallenge, setProfile } = useTransaction();
   const [emails, setEmails] = useState();
 
   useEffect(() => {
@@ -34,8 +34,9 @@ const EmailSection = () => {
   }, [oktaAuth, emails]);
 
   const finishTransaction = () => {
-    // re-fetch phones list
+    // re-fetch emails and profile
     setEmails(null);
+    setProfile(null);
   };
 
   const handleAddEmail = async (role, email) => {

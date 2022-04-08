@@ -12,10 +12,11 @@ import {
 } from '@okta/odyssey-react';
 import InfoBox from '../InfoBox';
 import Spinner from '../Spinner';
+import { useTransaction } from '../../TransactionContext';
 
 const ProfileSection = () => {
   const { oktaAuth } = useOktaAuth();
-  const [profile, setProfile] = useState(null);
+  const { profile, setProfile } = useTransaction();
   const [inputs, setInputs] = useState([
     { label: 'Given name', name: 'firstName', type: 'text', value: '' },
     { label: 'Family name', name: 'lastName', type: 'text', value: '' },
@@ -29,13 +30,14 @@ const ProfileSection = () => {
     if (editing) {
       return;
     }
-    getProfile(oktaAuth).then(({ profile }) => {
-      setProfile(profile);
-    }).catch((err) => {
-      console.error(err);
-      setError(err);
-    });
-  }, [oktaAuth, editing]);
+    const fetchProfile = async () => {
+      const profile = await getProfile(oktaAuth);
+      setProfile(profile.profile);
+    };
+    if (!profile) {
+      fetchProfile();
+    }
+  }, [oktaAuth, editing, profile]);
 
   const handleEditNames = () => {
     const newInputs = inputs.map(input => ({ ...input, value: profile[input.name] || '' }));
