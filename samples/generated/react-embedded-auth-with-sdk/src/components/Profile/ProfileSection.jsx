@@ -83,6 +83,7 @@ const ProfileSection = () => {
       } else {
         setError(err);
       }
+      setProfile(null);
     }
     
     handleCancelEditNames();

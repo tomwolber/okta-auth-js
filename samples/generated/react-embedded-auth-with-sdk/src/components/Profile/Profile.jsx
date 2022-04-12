@@ -34,11 +34,12 @@ const Profile = () => {
     const scopes = decodeToken(accessToken).payload.scp;
 
     if (approach === 'authorize') {
+      // Re-auth with Okta-hosted login flow
       await getWithRedirect(
         oktaAuth,
         {
           prompt: 'login',
-          maxAge: +error.max_age,
+          maxAge: +error.max_age, // Required for insufficient authentication scenario
           scopes,
           extraParams: {
             id_token_hint: idToken
@@ -46,7 +47,10 @@ const Profile = () => {
         }
       );
     } else if (approach === 'interact') {
-      const idxTransaction = await oktaAuth.idx.authenticate({ maxAge: error.meta.max_age });
+      // App will be redirected to FlowPage (/flow) once IdxTransaction is updated
+      const idxTransaction = await oktaAuth.idx.authenticate({ 
+        maxAge: error.meta.max_age // Required for insufficient authentication scenario
+      });
       setIdxTransaction(idxTransaction);
     }
   }, [oktaAuth, approach, error, setIdxTransaction]);
