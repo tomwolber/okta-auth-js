@@ -2,7 +2,7 @@ import { useCallback, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { useOktaAuth } from '@okta/okta-react';
 import { Box, Link } from '@okta/odyssey-react';
-import { useTransaction } from '../../TransactionContext';
+import { useIdxTransaction } from '../../contexts';
 import GeneralForm from '../GeneralForm';
 import IdpForm from '../IdpForm';
 
@@ -12,7 +12,7 @@ const FlowPage = () => {
   const { flow } = useParams();
   const history = useHistory();
   const { oktaAuth } = useOktaAuth();
-  const { transaction, setTransaction } = useTransaction();
+  const { transaction, setTransaction } = useIdxTransaction();
 
   const startFlow = useCallback(async () => {
     const newTransaction = flow === 'idp' 
@@ -29,9 +29,13 @@ const FlowPage = () => {
   }, [flow, transaction, startFlow]);
 
   const backToHomePage = async () => {
+    // redirect to home page 
+    // this step clears flow param
+    history.replace('/');
+
+    // clear transaction
     await oktaAuth.idx.cancel();
     setTransaction(null);
-    history.replace('/');
   };
 
   const getFormComponent = () => {

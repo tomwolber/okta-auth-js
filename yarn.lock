@@ -2264,6 +2264,11 @@
   resolved "https://registry.yarnpkg.com/@okta/odyssey-design-tokens/-/odyssey-design-tokens-0.10.0.tgz#8d9df6efa33e3484f51dae3f60ef64db6de76087"
   integrity sha512-3YLjtyRZrZlynxWMmAzTAhNrN2Xtmki8ubSKIfFlZpKa/aGSTdH4Jzv6j+A7bIa8HkiOrRnPdj1WW2JXJhFLqw==
 
+"@okta/odyssey-design-tokens@^0.11.2":
+  version "0.11.2"
+  resolved "https://registry.yarnpkg.com/@okta/odyssey-design-tokens/-/odyssey-design-tokens-0.11.2.tgz#694b5729ef98913aba563d7388365030baf29045"
+  integrity sha512-7NK51Qhxdw/VCLPSQdT729RgY1TsK2wnQX79h9nng6Yvk4m0mTJyupDVs3gPwOKcrZ6/Wj1Lm5g2m5ZSV9JfUw==
+
 "@okta/odyssey-react-theme@^0.10.0":
   version "0.10.0"
   resolved "https://registry.yarnpkg.com/@okta/odyssey-react-theme/-/odyssey-react-theme-0.10.0.tgz#95d3124ae700d36559eea6eca5f4f7cdc598d508"
@@ -2272,12 +2277,29 @@
     "@okta/odyssey-design-tokens" "^0.10.0"
     hoist-non-react-statics "^3.3.2"
 
+"@okta/odyssey-react-theme@^0.11.2":
+  version "0.11.2"
+  resolved "https://registry.yarnpkg.com/@okta/odyssey-react-theme/-/odyssey-react-theme-0.11.2.tgz#39e54d62cdc5907457ac23cfeeb721dbb938dc43"
+  integrity sha512-CRkvlFU/vP3PlmWoCGVdx2EONgLpBiHZn1UPbfya5beVxhJnzgaPM9T56y99hwL6qT6D3uCftxM9/B+/0mS/Pg==
+  dependencies:
+    "@okta/odyssey-design-tokens" "^0.11.2"
+    hoist-non-react-statics "^3.3.2"
+
 "@okta/odyssey-react@0.10.0":
   version "0.10.0"
   resolved "https://registry.yarnpkg.com/@okta/odyssey-react/-/odyssey-react-0.10.0.tgz#e87af44f39a013b5bb9b2b34bf968ae9f859bcfd"
   integrity sha512-gYvjaQ2GOW3KV89Y/lcfU9amzEaSA39Dn/hJTrtL91zEGjOZTAg7e9rbFVlbrD6hyG7mZP53PUbUMHghZelScA==
   dependencies:
     "@okta/odyssey-react-theme" "^0.10.0"
+    choices.js "^9.0.1"
+
+"@okta/odyssey-react@0.11.2":
+  version "0.11.2"
+  resolved "https://registry.yarnpkg.com/@okta/odyssey-react/-/odyssey-react-0.11.2.tgz#5ad09a09a7ce88d1dbdf69b078190cd21c3da04d"
+  integrity sha512-hOuFZpMbJHN0F97PJ/y1Jyc10aDc3ei6As1iIRTV2pUnRvYu/21PlqpUSvPHo+SBHITC+UPEZEY2CVxBUGV0uA==
+  dependencies:
+    "@okta/odyssey-react-theme" "^0.11.2"
+    "@react-aria/focus" "3.5.0"
     choices.js "^9.0.1"
 
 "@okta/okta-react@^6.4.3":
@@ -2443,6 +2465,56 @@
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@protobufjs/utf8/-/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
   integrity sha1-p3c2C1s5oaLlEG+OhY8v0tBgxXA=
+
+"@react-aria/focus@3.5.0":
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/@react-aria/focus/-/focus-3.5.0.tgz#02b85f97d6114af1eccc0902ce40723b626cb7f9"
+  integrity sha512-Eib75Q6QgQdn8VVVByg5Vipaaj/C//8Bs++sQY7nkomRx4sdArOnXbDppul3YHP6mRfU9VRLvAigEUlReQF/Xw==
+  dependencies:
+    "@babel/runtime" "^7.6.2"
+    "@react-aria/interactions" "^3.6.0"
+    "@react-aria/utils" "^3.9.0"
+    "@react-types/shared" "^3.9.0"
+    clsx "^1.1.1"
+
+"@react-aria/interactions@^3.6.0":
+  version "3.8.3"
+  resolved "https://registry.yarnpkg.com/@react-aria/interactions/-/interactions-3.8.3.tgz#31a913acee8199a827fe351f7d867a10706477a1"
+  integrity sha512-zffWRqhEk4SQNbr5sv3BnMIsmQjtdhXvv3FLn9Ch0HxxGb8VStjrVPEv7r9OtVodab+ThcUehL4NJ8zU/U/4ew==
+  dependencies:
+    "@babel/runtime" "^7.6.2"
+    "@react-aria/utils" "^3.11.3"
+    "@react-types/shared" "^3.11.2"
+
+"@react-aria/ssr@^3.1.2":
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/@react-aria/ssr/-/ssr-3.1.2.tgz#665a6fd56385068c7417922af2d0d71b0618e52d"
+  integrity sha512-amXY11ImpokvkTMeKRHjsSsG7v1yzzs6yeqArCyBIk60J3Yhgxwx9Cah+Uu/804ATFwqzN22AXIo7SdtIaMP+g==
+  dependencies:
+    "@babel/runtime" "^7.6.2"
+
+"@react-aria/utils@^3.11.3", "@react-aria/utils@^3.9.0":
+  version "3.11.3"
+  resolved "https://registry.yarnpkg.com/@react-aria/utils/-/utils-3.11.3.tgz#fd870e1c4b994967883d5d5dae6b14b4e6da2d16"
+  integrity sha512-EH3SyA3FtbhuOj1cgGveiEYidKe3CgGYkP8D57O46rlTWcgTxhGHUEibGeJw3PFXxmbgm5RIOdBo29YwItvtcQ==
+  dependencies:
+    "@babel/runtime" "^7.6.2"
+    "@react-aria/ssr" "^3.1.2"
+    "@react-stately/utils" "^3.4.1"
+    "@react-types/shared" "^3.11.2"
+    clsx "^1.1.1"
+
+"@react-stately/utils@^3.4.1":
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/@react-stately/utils/-/utils-3.4.1.tgz#56f049aa1704d338968b5973c796ee606e9c0c62"
+  integrity sha512-mjFbKklj/W8KRw1CQSpUJxHd7lhUge4i00NwJTwGxbzmiJgsTWlKKS/1rBf48ey9hUBopXT5x5vG/AxQfWTQug==
+  dependencies:
+    "@babel/runtime" "^7.6.2"
+
+"@react-types/shared@^3.11.2", "@react-types/shared@^3.9.0":
+  version "3.11.2"
+  resolved "https://registry.yarnpkg.com/@react-types/shared/-/shared-3.11.2.tgz#b269c0cf6223664ac42d980b7add1b67b51b87d4"
+  integrity sha512-MIjjjkFi/DTzMVmeFJJrpc51eS/PLNzLZEv6o/QJPhQ9uOMElYqA790qAcG75u3tR0XGU2Vv9RyeOC7+ppw8/Q==
 
 "@rollup/plugin-alias@^3.1.8":
   version "3.1.8"
@@ -5632,6 +5704,11 @@ cloneable-readable@^1.0.0:
     inherits "^2.0.1"
     process-nextick-args "^2.0.0"
     readable-stream "^2.3.5"
+
+clsx@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.1.1.tgz#98b3134f9abbdf23b2663491ace13c5c03a73188"
+  integrity sha512-6/bPho624p3S2pMyvP5kKBPXnI3ufHLObBFCfgx+LkeR5lg2XYy2hqZqUf45ypD8COn2bhgGJSUE+l5dhNBieA==
 
 co@^4.6.0:
   version "4.6.0"

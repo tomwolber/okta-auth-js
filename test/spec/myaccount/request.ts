@@ -47,7 +47,7 @@ describe('sendRequest', () => {
     });
   });
 
-  it('calls getWithRedirect with maxAge when has "insufficient_authentication_context" error', async () => {
+  it('throws insufficient_authentication error when has "insufficient_authentication_context" in www-authenticate header', async () => {
     jest.spyOn(mocked.oidc, 'decodeToken').mockReturnValue({
       payload: {
         scp: ['openid', 'okta.myaccount.*']
@@ -62,19 +62,18 @@ describe('sendRequest', () => {
         }
       }
     });
-    await sendRequest(auth, {
-      url: 'https://fake-url.com',
-      method: 'GET',
-      accessToken: 'fake-token'
-    });
-    expect(mocked.oidc.getWithRedirect).toHaveBeenCalledWith(auth, {
-      prompt: 'login',
-      maxAge: 900,
-      scopes: ['openid', 'okta.myaccount.*'],
-      extraParams: {
-        id_token_hint: 'fake-idToken'
-      }
-    });
+    try {
+      await sendRequest(auth, {
+        url: 'https://fake-url.com',
+        method: 'GET',
+        accessToken: 'fake-token'
+      });
+    } catch (err) {
+      expect(err).toBeInstanceOf(AuthApiError);
+      expect((err as any).errorSummary).toEqual('insufficient_authentication_context');
+      expect((err as any).errorCauses).toEqual(['The access token requires additional assurance to access the resource']);
+      expect((err as any).meta.max_age).toEqual(900);
+    }
   });
 
   it('throws AuthApiError', async () => {

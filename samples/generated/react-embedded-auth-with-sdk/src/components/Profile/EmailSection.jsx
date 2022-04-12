@@ -8,12 +8,12 @@ import { useOktaAuth } from '@okta/okta-react';
 import { Box, Text } from '@okta/odyssey-react';
 import Spinner from '../Spinner';
 import TransactionModalButton from '../TransactionModalButton';
-import { useTransaction } from '../../TransactionContext';
+import { useMyAccountContext } from '../../contexts';
 import { capitalizeFirstLetter } from '../../util';
 
 const EmailSection = () => {
   const { oktaAuth } = useOktaAuth();
-  const { setTransaction, setChallenge, setProfile } = useTransaction();
+  const { setTransaction, setChallenge, setProfile } = useMyAccountContext();
   const [emails, setEmails] = useState();
 
   useEffect(() => {

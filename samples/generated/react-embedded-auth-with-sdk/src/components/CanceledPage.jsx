@@ -1,10 +1,10 @@
 import { Heading, Button } from '@okta/odyssey-react';
 import { useHistory } from 'react-router-dom';
-import { useTransaction } from '../TransactionContext';
+import { useIdxTransaction } from '../contexts';
 
 export default function CanceledPage() {
   const history = useHistory();
-  const { setTransaction } = useTransaction();
+  const { setTransaction } = useIdxTransaction();
 
   const handleRestart = () => {
     setTransaction(null);

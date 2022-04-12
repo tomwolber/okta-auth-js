@@ -9,7 +9,6 @@ import {
 } from './transactions';
 import { httpRequest } from '../http';
 import { AuthApiError, AuthSdkError } from '../errors';
-import { decodeToken, getWithRedirect } from '../oidc';
 import { MyAccountRequestOptions as RequestOptions } from './types';
 import { OktaAuthInterface } from '../types';
 
@@ -51,7 +50,8 @@ const parseInsufficientAuthenticationError = (
     .map(part => part.trim())
     .map(part => part.split('='))
     .reduce((acc, curr) => {
-      acc[curr[0]] = curr[1];
+      // unwrap quotes from value
+      acc[curr[0]] = curr[1].replace(/^"(.*)"$/, '$1');
       return acc;
     }, {}) as InsufficientAuthenticationError;
 };
@@ -88,22 +88,25 @@ export async function sendRequest<T extends BaseTransaction> (
   } catch (err) {
     const errorResp = (err as AuthApiError).xhr;
     if (idToken && errorResp?.status === 403 && !!errorResp?.headers?.['www-authenticate']) {
-      const error = parseInsufficientAuthenticationError(errorResp?.headers?.['www-authenticate']);
-      if (error?.error?.includes('insufficient_authentication_context')) {
-        const scopes = decodeToken(accessToken).payload.scp!;
-        // reauthentication - this call triggers redirect
-        await getWithRedirect(
-          oktaAuth, 
-          {
-            prompt: 'login',
-            maxAge: +error.max_age,
-            scopes,
-            extraParams: {
-              // eslint-disable-next-line camelcase
-              id_token_hint: idToken
-            }
-          }
+      const { 
+        error, 
+        // eslint-disable-next-line camelcase
+        error_description,
+        // eslint-disable-next-line camelcase
+        max_age 
+      } = parseInsufficientAuthenticationError(errorResp?.headers?.['www-authenticate']);
+      if (error === 'insufficient_authentication_context') {
+        const insufficientAuthenticationError = new AuthApiError(
+          { 
+            errorSummary: error,
+            // eslint-disable-next-line camelcase
+            errorCauses: [error_description]
+          }, 
+          errorResp, 
+          // eslint-disable-next-line camelcase
+          { max_age: +max_age }
         );
+        throw insufficientAuthenticationError;
       } else {
         throw err;
       }

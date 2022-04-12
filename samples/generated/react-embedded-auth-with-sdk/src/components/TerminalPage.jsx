@@ -1,7 +1,7 @@
-import { useTransaction } from '../TransactionContext';
+import { useIdxTransaction } from '../contexts';
 
 export default function TerminalPage() {
-  const { transaction } = useTransaction();
+  const { transaction } = useIdxTransaction();
   const messages = transaction ? transaction.messages : 'Transaction could not be loaded';
   return (
     <>

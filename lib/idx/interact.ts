@@ -27,6 +27,7 @@ export interface InteractOptions {
   activationToken?: string;
   recoveryToken?: string;
   clientSecret?: string;
+  maxAge?: string | number;
 }
 
 export interface InteractResponse {
@@ -46,6 +47,7 @@ export interface InteractParams {
   activation_token?: string;
   recovery_token?: string;
   client_secret?: string;
+  max_age?: string | number;
 }
 /* eslint-enable camelcase */
 
@@ -84,6 +86,7 @@ export async function interact (
     codeChallengeMethod,
     activationToken,
     recoveryToken,
+    maxAge
   } = meta as IdxTransactionMeta;
   const clientSecret = options.clientSecret || authClient.options.clientSecret;
 
@@ -108,6 +111,9 @@ export async function interact (
   // eslint-disable-next-line max-len
   // https://oktawiki.atlassian.net/wiki/spaces/eng/pages/2445902453/Support+Device+Binding+in+interact#Scenario-1%3A-Non-User-Agent-with-Confidential-Client-(top-priority)
     params.client_secret = clientSecret;
+  }
+  if (maxAge) {
+    params.max_age = maxAge;
   }
   /* eslint-enable camelcase */
 

@@ -7,6 +7,7 @@ import {
   Infobox,
   Text
 } from '@okta/odyssey-react';
+import { useMyAccountContext } from '../../contexts';
 
 const ConfirmationForm = ({
   action,
@@ -15,6 +16,7 @@ const ConfirmationForm = ({
   onFinish
 }) => {
   const [error, setError] = useState(null);
+  const { startReAuthentication } = useMyAccountContext();
 
   const handleCancel = (e) => {
     e.preventDefault();
@@ -27,7 +29,12 @@ const ConfirmationForm = ({
       await onStart();
       onFinish();
     } catch (err) {
-      setError(err);
+      if (err.errorSummary === 'insufficient_authentication_context') {
+        onFinish();
+        startReAuthentication(err);
+      } else {
+        setError(err);
+      }
     }
   };
 

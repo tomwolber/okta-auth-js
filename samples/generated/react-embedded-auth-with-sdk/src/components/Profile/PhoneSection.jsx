@@ -7,12 +7,12 @@ import {
 import { useOktaAuth } from '@okta/okta-react';
 import { Box, Text } from '@okta/odyssey-react';
 import Spinner from '../Spinner';
-import TransactionModalButton from '../TransactionModalButton/TransactionModalButton';
-import { useTransaction } from '../../TransactionContext';
+import TransactionModalButton from '../TransactionModalButton';
+import { useMyAccountContext } from '../../contexts';
 
 const PhoneSection = () => {
   const { oktaAuth } = useOktaAuth();
-  const { setTransaction, setProfile } = useTransaction();
+  const { setTransaction, setProfile } = useMyAccountContext();
   const [phones, setPhones] = useState();
 
   useEffect(() => {

@@ -111,6 +111,7 @@ export interface IdxTransactionMeta extends PKCETransactionMeta {
   withCredentials?: boolean;
   activationToken?: string;
   recoveryToken?: string;
+  maxAge?: number;
 }
 
 export interface IdxTransaction {

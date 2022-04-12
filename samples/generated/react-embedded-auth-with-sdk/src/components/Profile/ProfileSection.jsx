@@ -12,11 +12,11 @@ import {
 } from '@okta/odyssey-react';
 import InfoBox from '../InfoBox';
 import Spinner from '../Spinner';
-import { useTransaction } from '../../TransactionContext';
+import { useMyAccountContext } from '../../contexts';
 
 const ProfileSection = () => {
   const { oktaAuth } = useOktaAuth();
-  const { profile, setProfile } = useTransaction();
+  const { profile, setProfile, startReAuthentication } = useMyAccountContext();
   const [inputs, setInputs] = useState([
     { label: 'Given name', name: 'firstName', type: 'text', value: '' },
     { label: 'Family name', name: 'lastName', type: 'text', value: '' },
@@ -37,7 +37,7 @@ const ProfileSection = () => {
     if (!profile) {
       fetchProfile();
     }
-  }, [oktaAuth, editing, profile]);
+  }, [oktaAuth, editing, profile, setProfile]);
 
   const handleEditNames = () => {
     const newInputs = inputs.map(input => ({ ...input, value: profile[input.name] || '' }));
@@ -68,6 +68,7 @@ const ProfileSection = () => {
       }
       return acc;
     }, profile);
+
     try {
       const newProfile = await updateProfile(oktaAuth, {
         payload: {
@@ -77,8 +78,11 @@ const ProfileSection = () => {
       setProfile(newProfile.profile);
       setUpdated(true);
     } catch (err) {
-      console.log(err);
-      setError(err);
+      if (err.errorSummary === 'insufficient_authentication_context') {
+        startReAuthentication(err);
+      } else {
+        setError(err);
+      }
     }
     
     handleCancelEditNames();
@@ -128,12 +132,12 @@ const ProfileSection = () => {
               variant="success"
               content="The profile was updated successfully" />
           )}
-          {!!error && error.errorCauses.map(cause => (
+          {!!error && (
             <Infobox 
-              key={cause.errorSummary}
-              variant="danger"
-              content={cause.errorSummary} />
-          ))}
+            key={error.errorSummary}
+            variant="danger"
+            content={error.errorSummary} />
+          )}
         </Box>
       )}
 

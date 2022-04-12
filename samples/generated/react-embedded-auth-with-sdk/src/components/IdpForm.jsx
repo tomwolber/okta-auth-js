@@ -1,8 +1,8 @@
 import { Link, Box } from '@okta/odyssey-react';
-import { useTransaction } from '../TransactionContext';
+import { useIdxTransaction } from '../contexts';
 
 const IdpForm = () => {
-  const { transaction: { availableSteps } } = useTransaction();
+  const { transaction: { availableSteps } } = useIdxTransaction();
   const idpMeta = availableSteps?.find(step => step.name === 'redirect-idp');
 
   return (

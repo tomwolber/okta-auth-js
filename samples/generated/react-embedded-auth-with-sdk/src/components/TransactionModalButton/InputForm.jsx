@@ -8,7 +8,7 @@ import {
   Text,
   Button
 } from '@okta/odyssey-react';
-import { useTransaction } from '../../TransactionContext';
+import { useMyAccountContext } from '../../contexts';
 import { capitalizeFirstLetter, camelize } from '../../util';
 
 const InputForm = ({
@@ -24,8 +24,9 @@ const InputForm = ({
     transaction, 
     setTransaction, 
     challenge, 
-    setChallenge 
-  } = useTransaction();
+    setChallenge,
+    startReAuthentication
+  } = useMyAccountContext();
 
   const [inputLabel, setInputLabel] = useState(() => {
     return initialInputLabel || `${capitalizeFirstLetter(factor)}`;
@@ -76,19 +77,26 @@ const InputForm = ({
         handleFinishTransaction();
       }
     } catch (err) {
-      setError(err);
+      if (err.errorSummary === 'insufficient_authentication_context') {
+        onFinish();
+        startReAuthentication(err);
+      } else {
+        setError(err);
+      }
     }
 
     setValue('');
   }, [
     value,
     onStart, 
-    onVerify, 
+    onVerify,
+    onFinish, 
     transaction, 
     setTransaction, 
     challenge,
     handleFinishTransaction, 
-    setError
+    setError,
+    startReAuthentication,
   ]);
 
   const handleInputChange = (e, v) => {

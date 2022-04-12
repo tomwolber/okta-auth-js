@@ -19,7 +19,7 @@ import TerminalPage from './components/TerminalPage';
 import FlowPage from './components/FlowPage';
 import LoginCallback from './components/LoginCallback';
 import Spinner from './components/Spinner';
-import { Transaction } from './TransactionContext';
+import { IdxTransaction } from './contexts';
 import oidcConfig from './config';
 
 const oktaAuth = (() => {
@@ -53,11 +53,6 @@ const restoreOriginalUri = () => {};
 function App() {
   const history = useHistory();
   const [transaction, setTransaction] = useState(null);
-  
-  // track myaccount transactions
-  const [profile, setProfile] = useState(null);
-  const [challenge, setChallenge] = useState(null); 
-
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -103,13 +98,9 @@ function App() {
       onAuthRequired={() => history.replace('/')}
       restoreOriginalUri={restoreOriginalUri}
     >
-      <Transaction.Provider value={{
+      <IdxTransaction.Provider value={{
         transaction,
         setTransaction,
-        profile,
-        setProfile,
-        challenge,
-        setChallenge
       }}>
         <Switch>
           <Route path="/" exact component={HomePage} />
@@ -119,7 +110,7 @@ function App() {
           <Route path="/canceled" component={CanceledPage} />
           <Route path="/flow/:flow" component={FlowPage} />
         </Switch>
-      </Transaction.Provider>
+      </IdxTransaction.Provider>
     </Security>
   );
 }

@@ -7,11 +7,11 @@ import {
   hasAuthorizationCode, 
   IdxStatus 
 } from '@okta/okta-auth-js';
-import { useTransaction } from '../TransactionContext';
+import { useIdxTransaction } from '../contexts';
 
 const LoginCallback = () => {
   const history = useHistory();
-  const { setTransaction } = useTransaction();
+  const { setTransaction } = useIdxTransaction();
   const { oktaAuth } = useOktaAuth();
 
   useEffect(() => {

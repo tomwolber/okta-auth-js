@@ -11,14 +11,14 @@ import {
   Link,
   Box,
 } from '@okta/odyssey-react';
-import { useTransaction } from '../TransactionContext';
+import { useIdxTransaction } from '../contexts';
 import { formTransformer } from '../formTransformer';
 import { capitalizeFirstLetter, getMessageVariant } from '../util';
 import Spinner from './Spinner';
 
 const GeneralForm = () => {
   const { oktaAuth } = useOktaAuth();
-  const { transaction, setTransaction } = useTransaction();
+  const { transaction, setTransaction } = useIdxTransaction();
   const [inputValues, setInputValues] = useState({});
   const [processing, setProcessing] = useState(false);
 
