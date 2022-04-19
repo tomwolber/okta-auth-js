@@ -103,6 +103,7 @@ const samples = [
       'social-idp',
       'totp-signup',
       'totp-signin',
+      'security-questions',
     ],
     useEnv: true,
   },

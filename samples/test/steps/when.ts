@@ -47,6 +47,8 @@ import setInputField from '../support/action/setInputField';
 import { camelize } from '../util';
 import getCodeFromSMS from '../support/action/getCodeFromSMS';
 import a18nClient from '../support/management-api/a18nClient';
+import selectEnrollMethod from '../support/action/selectEnrollMethod';
+
 
 When(
   'she clicks the {string} button', 
@@ -97,6 +99,11 @@ When(
 );
 
 When(
+  /^she selects the radio option to "(?<option>.+?)"$/,
+  (option: string) => selectEnrollMethod(option)
+);
+
+When(
   'she inputs the correct code from her Google Authenticator App for {string}',
   enterCorrectGoogleAuthenticatorCode
 );
@@ -125,8 +132,8 @@ When(
       authenticatorKey = 'phone_number';
     } else if (authenticator === 'Google Authenticator') {
       authenticatorKey = 'google_otp';
-    } else if (authenticatorKey === 'Security Question') {
-      authenticatorKey = 'question';
+    } else if (authenticator === 'Security Question') {
+      authenticatorKey = 'security_question';
     } else {
       throw new Error(`Unknown authenticator ${authenticator}`);
     }
